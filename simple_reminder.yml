@@ -1,0 +1,21 @@
+- engine: engine.DjangoReminderTestExecutionEngine
+  description: Sign up, create reminder and wait for email reminder to arrive.
+  scenario:
+    - Load website
+    - Click: Register
+    - Fill form:
+        Username: django
+        Email: django@reinhardt.com
+        Password1: jazzguitar
+        Password2: jazzguitar
+    - Click: Create
+    - Create reminder:
+        Description: Remind me about upcoming gig.
+        Days from now: 30
+    - Wait for email:
+        Containing: Confirm E-mail Address
+    - Confirm emails sent: 1
+    - Time travel:
+        Days: 30
+    - Wait for email:
+        Containing: Remind me about upcoming gig.

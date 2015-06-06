@@ -1,0 +1,12 @@
+xvfb: false
+postgres_folder: /usr/local/bin
+postgres_version: 9.4.2
+redis_version: 3.0.1
+django_version: 1.8
+celery_version: 3.1.17
+pause_on_success: true
+pause_on_failure: true
+systembits: 64
+platform: darwin
+requires_internet: False
+startup_timeout: 45
