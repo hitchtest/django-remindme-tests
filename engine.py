@@ -18,7 +18,7 @@ PROJECT_DIRECTORY = path.abspath(path.join(path.dirname(__file__), '..'))
 
 class DjangoReminderTestExecutionEngine(unittest.TestCase):
     """Engine for orchestating and interacting with the reminders app."""
-    test_vars = {}
+    settings = {}
     preconditions = {}
 
     def setUp(self):
@@ -30,15 +30,15 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         subprocess.call(["./venv/bin/pip", "install", "-r", "requirements.txt"])
 
         environment = hitchenvironment.Environment(
-            self.test_vars["platform"],
-            self.test_vars["systembits"],
-            self.test_vars["requires_internet"]
+            self.settings["platform"],
+            self.settings["systembits"],
+            self.settings["requires_internet"]
         )
 
         self.services = ServiceBundle(
             project_directory=PROJECT_DIRECTORY,
             environment=environment,
-            startup_timeout=float(self.test_vars["startup_timeout"]),
+            startup_timeout=float(self.settings["startup_timeout"]),
             shutdown_timeout=5.0,
         )
 
@@ -46,9 +46,9 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         postgres_user = hitchpostgres.PostgresUser("remindme", "password")
 
         self.services['Postgres'] = hitchpostgres.PostgresService(
-            version=self.test_vars.get("postgres_version"),
+            version=self.settings.get("postgres_version"),
             postgres_installation=hitchpostgres.PostgresInstallation(
-                bin_directory = self.test_vars.get("postgres_folder")
+                bin_directory = self.settings.get("postgres_folder")
             ),
             users=[postgres_user, ],
             databases=[hitchpostgres.PostgresDatabase("remindme", postgres_user), ]
@@ -57,27 +57,27 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         self.services['HitchSMTP'] = hitchsmtp.HitchSMTPService()
 
         self.services['Redis'] = hitchredis.RedisService(
-            version=self.test_vars.get("redis_version"),
+            version=self.settings.get("redis_version"),
             port=16379,
         )
 
         self.services['Django'] = hitchdjango.DjangoService(
             python="{}/venv/bin/python".format(PROJECT_DIRECTORY),
-            version=str(self.test_vars.get("django_version")),
+            version=str(self.settings.get("django_version")),
             settings="remindme.settings",
             needs=[self.services['Postgres'], ]
         )
 
         self.services['Celery'] = hitchcelery.CeleryService(
             python="{}/venv/bin/python".format(PROJECT_DIRECTORY),
-            version=self.test_vars.get("celery_version"),
+            version=self.settings.get("celery_version"),
             app="remindme", loglevel="INFO",
             needs=[
                 self.services['Redis'], self.services['Postgres'],
             ]
         )
 
-        self.services['Firefox'] = hitchselenium.SeleniumService(xvfb=self.test_vars.get("xvfb", False))
+        self.services['Firefox'] = hitchselenium.SeleniumService(xvfb=self.settings.get("xvfb", False))
 
         self.services['Cron'] = hitchcron.CronService(
             run=self.services['Django'].manage("trigger").command,
@@ -135,12 +135,12 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         if sys.exc_info() != (None, None, None):
             #system("notify-send -i 'notification-power-disconnected' {} FAILURE".format(sys.argv[0]))
             #system("kaching fail")                     # play a sad sound (sudo pip/pipsi install kaching first)
-            if self.test_vars.get("pause_on_failure", False):
+            if self.settings.get("pause_on_failure", False):
                 self.pause()
         else:
             #system("notify-send -i 'notification-display-brightness-full' {} PASSED".format(sys.argv[0]))
             #subprocess.call(["kaching", "pass"])       # play a happy sound (sudo pip/pipsi install kaching first)
-            if self.test_vars.get("pause_on_success", False):
+            if self.settings.get("pause_on_success", False):
                 self.pause()
 
         # Commit genocide on the services required to run your test
