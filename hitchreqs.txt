@@ -1,7 +1,7 @@
 click==4.0
 colorama==0.3.3
 faketime==0.9.6.3
-hitch==0.1
+hitch==0.2
 hitchcelery==0.1
 hitchcron==0.1
 hitchdjango==0.1
@@ -11,7 +11,7 @@ hitchredis==0.1
 hitchselenium==0.1
 hitchserve==0.1
 hitchsmtp==0.1
-hitchtest==0.1
+hitchtest==0.2
 humanize==0.5.1
 ipython==3.1.0
 Jinja2==2.7.3
