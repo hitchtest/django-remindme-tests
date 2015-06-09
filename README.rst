@@ -12,6 +12,18 @@ Setup
 
 You must have Postgresql, Redis, Python and Virtualenv installed before continuing.
 
+On Ubuntu::
+
+    $ sudo apt-get install python python-virtualenv python-pip postgresql redis-server git firefox node-less automake libtool
+
+On Mac OS X::
+
+    $ brew install python redis postgresql git libtool automake npm
+
+    $ npm install -g less
+
+    $ pip install -U setuptools pip virtualenv
+
 To install hitch::
 
   $ sudo pip install hitch
@@ -39,9 +51,18 @@ Then run::
 
   $ hitch test simple_reminder.yml
 
-You may need to tweak some of the values in settings.yml to get it
-to run on your machine - depending upon which versions of Postgres
-and Redis you have installed, for instance.
+You may need to tweak some of the settings to get it to run.
+
+Run with different settings
+===========================
+
+You can run with a different settings file to settings.yml::
+
+  $ hitch test simple_reminder.yml --settings macos.yml
+
+You can also amend settings directly from the command line using JSON, e.g.::
+
+  $ hitch test simple_reminder.yml --settings macos.yml --extra '{"postgres_version": "3.5.5"}'
 
 Caveats
 =======
