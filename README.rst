@@ -71,3 +71,4 @@ Caveats
 
 
 .. _Django-RemindMe: https://github.com/hitchtest/django-remindme
+.. _pipsi: https://github.com/mitsuhiko/pipsi
