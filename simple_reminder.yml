@@ -1,4 +1,4 @@
-- engine: engine.DjangoReminderTestExecutionEngine
+- engine: engine.py:DjangoReminderTestExecutionEngine
   description: Sign up, create reminder and wait for email reminder to arrive.
   scenario:
     - Load website
