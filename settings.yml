@@ -10,4 +10,6 @@ systembits: 64
 platform: linux2
 requires_internet: False
 startup_timeout: 45
-quiet: False
+python_versions:
+  - 3.4
+

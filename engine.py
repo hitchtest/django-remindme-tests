@@ -24,15 +24,24 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
     def setUp(self):
         """Ensure virtualenv present, then run all services."""
         chdir(PROJECT_DIRECTORY)
-        if not path.exists(path.join(PROJECT_DIRECTORY, "venv")):
-            call(["virtualenv", "venv", "--no-site-packages"])
-            call(["./venv/bin/pip", "install", "-U", "pip",])
-        call(["./venv/bin/pip", "install", "-r", "requirements.txt"])
+        venv_dir = path.join(PROJECT_DIRECTORY, "venv{}".format(
+            self.preconditions['python_version'])
+        )
+        if not path.exists(venv_dir):
+            call([
+                    "virtualenv", "--no-site-packages", "--distribute",
+                    "-p", "/usr/bin/python{}".format(self.preconditions['python_version']),
+                    venv_dir,
+                ])
+
+        call([path.join(venv_dir, "bin", "pip"), "install", "-r", "requirements.txt"])
+        venv_python = path.join(venv_dir, "bin", "python")
+
 
         environment = hitchenvironment.Environment(
             self.settings["platform"],
             self.settings["systembits"],
-            self.settings["requires_internet"]
+            self.settings["requires_internet"],
         )
 
         self.services = ServiceBundle(
@@ -40,7 +49,6 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
             environment=environment,
             startup_timeout=float(self.settings["startup_timeout"]),
             shutdown_timeout=5.0,
-            quiet=self.settings["quiet"],
         )
 
         # Postgres user called remindme with password 'password' required - see Django's settings.py
@@ -63,14 +71,14 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         )
 
         self.services['Django'] = hitchdjango.DjangoService(
-            python="{}/venv/bin/python".format(PROJECT_DIRECTORY),
+            python=venv_python,
             version=str(self.settings.get("django_version")),
             settings="remindme.settings",
             needs=[self.services['Postgres'], ]
         )
 
         self.services['Celery'] = hitchcelery.CeleryService(
-            python="{}/venv/bin/python".format(PROJECT_DIRECTORY),
+            python=venv_python,
             version=self.settings.get("celery_version"),
             app="remindme", loglevel="INFO",
             needs=[
