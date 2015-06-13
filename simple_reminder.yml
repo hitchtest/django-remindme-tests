@@ -2,16 +2,18 @@
   description: Sign up, create reminder and wait for email reminder to arrive.
   scenario:
     - Load website
-    - Click: Register
+    - Click: register
     - Fill form:
-        Username: django
-        Email: django@reinhardt.com
-        Password1: jazzguitar
-        Password2: jazzguitar
-    - Click: Create
-    - Create reminder:
-        Description: Remind me about upcoming gig.
-        Days from now: 30
+        id_username: django
+        id_email: django@reinhardt.com
+        id_password1: jazzguitar
+        id_password2: jazzguitar
+    - Click submit
+    - Click: create
+    - Fill form:
+        id_description: Remind me about upcoming gig.
+        id_when: 30 days
+    - Click: create
     - Wait for email:
         Containing: Confirm E-mail Address
     - Confirm emails sent: 1

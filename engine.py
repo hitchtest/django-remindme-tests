@@ -1,5 +1,6 @@
 from hitchserve import ServiceBundle, Interactive, HitchTraceback
 from os import path, system, chdir
+from subprocess import call, PIPE
 import hitchenvironment
 import hitchpostgres
 import hitchselenium
@@ -8,9 +9,8 @@ import hitchcelery
 import hitchredis
 import hitchsmtp
 import hitchcron
-import subprocess
 import unittest
-import datetime
+import IPython
 import sys
 
 # Get directory above this file
@@ -25,9 +25,9 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         """Ensure virtualenv present, then run all services."""
         chdir(PROJECT_DIRECTORY)
         if not path.exists(path.join(PROJECT_DIRECTORY, "venv")):
-            subprocess.call(["virtualenv", "venv", "--no-site-packages"])
-            subprocess.call(["./venv/bin/pip", "install", "-U", "pip",])
-        subprocess.call(["./venv/bin/pip", "install", "-r", "requirements.txt"])
+            call(["virtualenv", "venv", "--no-site-packages"])
+            call(["./venv/bin/pip", "install", "-U", "pip",])
+        call(["./venv/bin/pip", "install", "-r", "requirements.txt"])
 
         environment = hitchenvironment.Environment(
             self.settings["platform"],
@@ -40,6 +40,7 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
             environment=environment,
             startup_timeout=float(self.settings["startup_timeout"]),
             shutdown_timeout=5.0,
+            quiet=self.settings["quiet"],
         )
 
         # Postgres user called remindme with password 'password' required - see Django's settings.py
@@ -87,39 +88,41 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
 
         self.services.startup(interactive=False)
 
-        # Convenience functions
+        # Configure selenium driver
         self.driver = self.services['Firefox'].driver
-        self.driver.implicitly_wait(5.0)
+        self.driver.implicitly_wait(2.0)
         self.driver.accept_next_alert = True
-        self.log = self.services.log
-        self.warn = self.services.warn
-        self.pause = self.services.pause
+
+    def pause(self):
+        """Stop. IPython time."""
+        if hasattr(self, 'services'):
+            self.services.pause()
+        else:
+            IPython.embed()
 
     def load_website(self):
+        """Navigate to website in Firefox."""
         self.driver.get(self.services['Django'].url())
 
     def click(self, on):
         """Click on HTML id."""
-        self.driver.find_element_by_id(on.replace(" ", "-").lower()).click()
+        self.driver.find_element_by_id(on).click()
 
     def fill_form(self, **kwargs):
-        """Convert keyword args into HTML ids and type in them with the value."""
+        """Fill in a form with id=value."""
         for element, text in kwargs.items():
-            self.driver.find_element_by_id("id_{}".format(element.lower())).send_keys(text)
+            self.driver.find_element_by_id(element).send_keys(text)
+
+    def click_submit(self):
+        """Click on a submit button if it exists."""
         self.driver.find_element_by_css_selector("button[type=\"submit\"]").click()
 
-    def create_reminder(self, description="", days_from_now=""):
-        reminder_date_and_time = datetime.datetime.now() + datetime.timedelta(days=int(days_from_now))
-        self.driver.find_element_by_id("id_description").send_keys(description)
-        self.driver.find_element_by_id("id_date_and_time").send_keys(
-            reminder_date_and_time.strftime("%m/%d/%Y %H:%M")
-        )
-        self.driver.find_element_by_css_selector("""input[type=\"submit\"]""").click()
-
     def confirm_emails_sent(self, number):
+        """Count number of emails sent by app."""
         self.assertEquals(len(self.services['HitchSMTP'].logs.json()), int(number))
 
     def wait_for_email(self, containing=None):
+        """Wait for, and return email."""
         self.services['HitchSMTP'].logs.out.tail.until_json(
             lambda email: containing in email['payload'] or containing in email['subject'],
             timeout=15,
@@ -130,18 +133,19 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         """Get in the Delorean, Marty!"""
         self.services.time_travel(days=int(days))
 
-    def tearDown(self):
-        """We're done here..."""
-        if sys.exc_info() != (None, None, None):
-            #system("notify-send -i 'notification-power-disconnected' {} FAILURE".format(sys.argv[0]))
-            #system("kaching fail")                     # play a sad sound (sudo pip/pipsi install kaching first)
-            if self.settings.get("pause_on_failure", False):
-                self.pause()
-        else:
-            #system("notify-send -i 'notification-display-brightness-full' {} PASSED".format(sys.argv[0]))
-            #subprocess.call(["kaching", "pass"])       # play a happy sound (sudo pip/pipsi install kaching first)
-            if self.settings.get("pause_on_success", False):
-                self.pause()
+    def on_failure(self, exception):
+        """Stop and IPython."""
+        if call(["which", "kaching"], stdout=PIPE) == 0:
+            call(["kaching", "fail"])       # play a sad sound (sudo pip/pipsi install kaching first)
+        if self.settings.get("pause_on_failure", False):
+            self.pause()
 
-        # Commit genocide on the services required to run your test
-        self.services.shutdown()
+    def on_success(self):
+        """Ka-ching!"""
+        if call(["which", "kaching"], stdout=PIPE) == 0:
+            call(["kaching", "pass"])       # play a happy sound (sudo pip/pipsi install kaching first)
+
+    def tearDown(self):
+        """Commit genocide on the services required to run your test."""
+        if hasattr(self, 'services'):
+            self.services.shutdown()
