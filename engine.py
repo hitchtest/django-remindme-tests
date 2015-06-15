@@ -7,21 +7,18 @@ import hitchselenium
 import hitchdjango
 import hitchcelery
 import hitchredis
+import hitchtest
 import hitchsmtp
 import hitchcron
-import unittest
 import IPython
 import sys
 
 # Get directory above this file
 PROJECT_DIRECTORY = path.abspath(path.join(path.dirname(__file__), '..'))
 
-class DjangoReminderTestExecutionEngine(unittest.TestCase):
+class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
     """Engine for orchestating and interacting with the reminders app."""
-    settings = {}
-    preconditions = {}
-
-    def setUp(self):
+    def set_up(self):
         """Ensure virtualenv present, then run all services."""
         chdir(PROJECT_DIRECTORY)
         venv_dir = path.join(PROJECT_DIRECTORY, "venv{}".format(
@@ -32,10 +29,13 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
                     "virtualenv", "--no-site-packages", "--distribute",
                     "-p", "/usr/bin/python{}".format(self.preconditions['python_version']),
                     venv_dir,
-                ])
+                ], stdout=sys.stdout, stderr=sys.stderr)
 
-        call([path.join(venv_dir, "bin", "pip"), "install", "-r", "requirements.txt"])
-        venv_python = path.join(venv_dir, "bin", "python")
+        call(
+            [path.join(venv_dir, "bin", "pip"), "install", "-r", "requirements.txt"],
+            stdout=sys.stdout, stderr=sys.stderr
+        )
+        virtualenv_python = path.join(venv_dir, "bin", "python")
 
 
         environment = hitchenvironment.Environment(
@@ -71,14 +71,14 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         )
 
         self.services['Django'] = hitchdjango.DjangoService(
-            python=venv_python,
+            python=virtualenv_python,
             version=str(self.settings.get("django_version")),
             settings="remindme.settings",
             needs=[self.services['Postgres'], ]
         )
 
         self.services['Celery'] = hitchcelery.CeleryService(
-            python=venv_python,
+            python=virtualenv_python,
             version=self.settings.get("celery_version"),
             app="remindme", loglevel="INFO",
             needs=[
@@ -86,7 +86,9 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
             ]
         )
 
-        self.services['Firefox'] = hitchselenium.SeleniumService(xvfb=self.settings.get("xvfb", False))
+        self.services['Firefox'] = hitchselenium.SeleniumService(
+            xvfb=self.settings.get("quiet", False)
+        )
 
         self.services['Cron'] = hitchcron.CronService(
             run=self.services['Django'].manage("trigger").command,
@@ -101,12 +103,13 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         self.driver.implicitly_wait(2.0)
         self.driver.accept_next_alert = True
 
-    def pause(self):
+    def pause(self, message=None):
         """Stop. IPython time."""
         if hasattr(self, 'services'):
-            self.services.pause()
-        else:
-            IPython.embed()
+            self.services.start_interactive_mode()
+        hitchtest.ipython_embed(message)
+        if hasattr(self, 'services'):
+            self.services.start_interactive_mode()
 
     def load_website(self):
         """Navigate to website in Firefox."""
@@ -141,19 +144,21 @@ class DjangoReminderTestExecutionEngine(unittest.TestCase):
         """Get in the Delorean, Marty!"""
         self.services.time_travel(days=int(days))
 
-    def on_failure(self, exception):
+    def on_failure(self, stacktrace):
         """Stop and IPython."""
-        if call(["which", "kaching"], stdout=PIPE) == 0:
-            call(["kaching", "fail"])       # play a sad sound (sudo pip/pipsi install kaching first)
-        if self.settings.get("pause_on_failure", False):
-            self.pause()
+        self.stacktrace = stacktrace
+        if not self.settings['quiet']:
+            if call(["which", "kaching"], stdout=PIPE) == 0:
+                call(["kaching", "fail"])  # sudo pip install kaching for sad sound
+            if self.settings.get("pause_on_failure", False):
+                self.pause(message=self.stacktrace.to_template())
 
     def on_success(self):
         """Ka-ching!"""
-        if call(["which", "kaching"], stdout=PIPE) == 0:
-            call(["kaching", "pass"])       # play a happy sound (sudo pip/pipsi install kaching first)
+        if not self.settings['quiet'] and call(["which", "kaching"], stdout=PIPE) == 0:
+            call(["kaching", "pass"])  # sudo pip install kaching for happy sound
 
-    def tearDown(self):
+    def tear_down(self):
         """Commit genocide on the services required to run your test."""
         if hasattr(self, 'services'):
             self.services.shutdown()

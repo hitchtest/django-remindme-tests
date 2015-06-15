@@ -1,7 +1,6 @@
 click==4.0
 colorama==0.3.3
 faketime==0.9.6.3
-hitch==0.2
 hitchcelery==0.1
 hitchcron==0.1
 hitchdjango==0.1

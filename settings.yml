@@ -1,6 +1,5 @@
-xvfb: false
 postgres_folder: /usr/lib/postgresql/9.3/bin/
-postgres_version: 9.3.7
+postgres_version: 9.3.8
 redis_version: 2.8.4
 django_version: 1.8
 celery_version: 3.1.17
@@ -11,5 +10,6 @@ platform: linux2
 requires_internet: False
 startup_timeout: 45
 python_versions:
+  - 2.7
   - 3.4
 
