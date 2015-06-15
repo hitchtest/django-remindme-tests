@@ -1,4 +1,4 @@
-from hitchserve import ServiceBundle, Interactive, HitchTraceback
+from hitchserve import ServiceBundle
 from os import path, system, chdir
 from subprocess import call, PIPE
 import hitchenvironment
