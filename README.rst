@@ -49,9 +49,12 @@ Enter the django-remindme/django-remindme-tests/ folder and run::
 
 Then run::
 
-  $ hitch test simple_reminder.yml
+  $ hitch test .
 
 You may need to tweak some of the settings to get it to run.
+
+This should demonstrate one test *passing* (with python 2.7) and one test
+failing (with python 3.4).
 
 Run with different settings
 ===========================
