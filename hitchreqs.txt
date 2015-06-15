@@ -10,7 +10,7 @@ hitchredis==0.1
 hitchselenium==0.1
 hitchserve==0.2
 hitchsmtp==0.1
-hitchtest==0.3
+hitchtest==0.4
 humanize==0.5.1
 ipython==3.1.0
 Jinja2==2.7.3
