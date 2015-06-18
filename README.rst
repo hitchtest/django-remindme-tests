@@ -61,11 +61,11 @@ Run with different settings
 
 You can run with a different settings file to settings.yml::
 
-  $ hitch test simple_reminder.yml --settings macos.yml
+  $ hitch test simple_reminder.test --settings macos.yml
 
 You can also amend settings directly from the command line using JSON, e.g.::
 
-  $ hitch test simple_reminder.yml --settings macos.yml --extra '{"postgres_version": "3.5.5"}'
+  $ hitch test simple_reminder.test --settings macos.yml --extra '{"postgres_version": "3.5.5"}'
 
 Caveats
 =======
