@@ -100,6 +100,8 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
 
         # Configure selenium driver
         self.driver = self.services['Firefox'].driver
+        self.driver.set_window_size(450, 350)
+        self.driver.set_window_position(1366-450, 0)
         self.driver.implicitly_wait(2.0)
         self.driver.accept_next_alert = True
 
@@ -109,7 +111,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
             self.services.start_interactive_mode()
         hitchtest.ipython_embed(message)
         if hasattr(self, 'services'):
-            self.services.start_interactive_mode()
+            self.services.stop_interactive_mode()
 
     def load_website(self):
         """Navigate to website in Firefox."""

@@ -7,7 +7,7 @@ hitchdjango==0.1
 hitchenvironment==0.1
 hitchpostgres==0.1
 hitchredis==0.1
-hitchselenium==0.1
+hitchselenium==0.2
 hitchserve==0.2.3
 hitchsmtp==0.1
 hitchtest==0.4
