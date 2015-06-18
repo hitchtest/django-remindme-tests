@@ -11,4 +11,3 @@ requires_internet: False
 startup_timeout: 45
 python_versions:
   - 2.7
-  - 3.4
