@@ -132,7 +132,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
 
     def confirm_emails_sent(self, number):
         """Count number of emails sent by app."""
-        self.assertEquals(len(self.services['HitchSMTP'].logs.json()), int(number))
+        assert len(self.services['HitchSMTP'].logs.json()) == int(number)
 
     def wait_for_email(self, containing=None):
         """Wait for, and return email."""
