@@ -6,7 +6,7 @@ celery_version: 3.1.17
 pause_on_success: false
 pause_on_failure: true
 systembits: 64
-platform: linux2
+platform: linux
 requires_internet: False
 startup_timeout: 45
 python_versions:
