@@ -8,9 +8,9 @@ hitchenvironment==0.2
 hitchpostgres==0.2
 hitchredis==0.2
 hitchselenium==0.3
-hitchserve==0.3.1
+hitchserve==0.3.2
 hitchsmtp==0.2.1
-hitchtest==0.5
+hitchtest==0.5.1
 humanize==0.5.1
 ipython==3.1.0
 Jinja2==2.7.3
@@ -21,4 +21,5 @@ PyYAML==3.11
 selenium==2.45.0
 six==1.9.0
 tblib==1.0.1
+tornado==4.2
 xeger==0.3
