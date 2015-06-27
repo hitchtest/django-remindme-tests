@@ -8,7 +8,7 @@ hitchenvironment==0.2
 hitchpostgres==0.2
 hitchredis==0.2
 hitchselenium==0.3
-hitchserve==0.3.3
+hitchserve==0.3.4
 hitchsmtp==0.2.1
 hitchtest==0.5.2
 humanize==0.5.1
