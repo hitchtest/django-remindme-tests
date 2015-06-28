@@ -109,10 +109,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         """Stop. IPython time."""
         if hasattr(self, 'services'):
             self.services.start_interactive_mode()
-        import signal
-        self.signal_manager.turn_off_signal_handler(signal.SIGINT)
-        hitchtest.ipython_embed(message)
-        self.signal_manager.attach_handler(signal.SIGINT, self.abort)
+        self.ipython()
         if hasattr(self, 'services'):
             self.services.stop_interactive_mode()
 
