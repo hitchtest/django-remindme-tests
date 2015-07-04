@@ -47,30 +47,26 @@ Enter the django-remindme/django-remindme-tests/ folder and run::
 
   $ hitch init
 
-Then run::
+Then, on Linux, run::
 
-  $ hitch test .
+  $ hitch test simple_reminder.test
 
-You may need to tweak some of the settings to get it to run.
-
-This should demonstrate one test *passing* (with python 2.7) and one test
-failing (with python 3.4).
-
-Run with different settings
-===========================
-
-You can run with a different settings file to settings.yml::
+On Mac OS X, run::
 
   $ hitch test simple_reminder.test --settings macos.yml
 
-You can also amend settings directly from the command line using JSON, e.g.::
+You may need to tweak some of the version settings in macos.yml or
+settings.yml to get it to run, if your version of postgres or redis
+are slightly different to the ones specified.
 
-  $ hitch test simple_reminder.test --settings macos.yml --extra '{"postgres_version": "3.5.5"}'
+This should demonstrate one test *passing* (with python 2.7) and one test
+failing (with python 3.4).
 
 Caveats
 =======
 
 * The tests will only run on *nix systems. Windows is not supported.
+* Sometimes the latest version of firefox does not work correctly with selenium. If you are experiencing selenium errors, try downgrading firefox one or two versions.
 
 
 .. _Django-RemindMe: https://github.com/hitchtest/django-remindme
