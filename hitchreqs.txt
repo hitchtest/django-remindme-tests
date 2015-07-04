@@ -18,7 +18,7 @@ MarkupSafe==0.23
 psutil==3.0.0
 pyuv==1.0.2
 PyYAML==3.11
-selenium==2.45.0
+selenium==2.46.0
 six==1.9.0
 tblib==1.0.1
 tornado==4.2
