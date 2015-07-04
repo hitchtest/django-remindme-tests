@@ -18,7 +18,7 @@ On Ubuntu::
 
 On Mac OS X::
 
-    $ brew install python redis postgresql git libtool automake npm
+    $ brew install python python3 redis postgresql git libtool automake npm
 
     $ npm install -g less
 
