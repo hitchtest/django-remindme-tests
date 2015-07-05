@@ -25,9 +25,13 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
             self.preconditions['python_version'])
         )
         if not path.exists(venv_dir):
+            system_python = path.join(
+                self.settings['python_folder'][sys.platform],
+                self.preconditions['python_version']
+            )
             call([
-                    "virtualenv", "--no-site-packages", "--distribute",
-                    "-p", "/usr/bin/python{}".format(self.preconditions['python_version']),
+                    "virtualenv", "--no-site-packages",
+                    "--distribute", "-p", system_python,
                     venv_dir,
                 ], stdout=sys.stdout, stderr=sys.stderr)
 
@@ -49,7 +53,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         self.services['Postgres'] = hitchpostgres.PostgresService(
             version=self.settings.get("postgres_version"),
             postgres_installation=hitchpostgres.PostgresInstallation(
-                bin_directory = self.settings.get("postgres_folder")
+                bin_directory = self.settings["postgres_folder"][sys.platform]
             ),
             users=[postgres_user, ],
             databases=[hitchpostgres.PostgresDatabase("remindme", postgres_user), ]

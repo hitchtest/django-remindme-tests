@@ -1,4 +1,9 @@
-postgres_folder: /usr/lib/postgresql/9.3/bin/
+postgres_folder:
+  darwin: /usr/local/bin/
+  linux: /usr/lib/postgresql/9.3/bin/
+python_folder:
+  darwin: /usr/local/bin/
+  linux: /usr/bin/
 postgres_version: 9.3.9
 redis_version: 2.8.4
 django_version: 1.8
@@ -12,4 +17,31 @@ startup_timeout: 45
 python_versions:
   - 2.7
   - 3.4
-
+environment:
+  - approved_platforms:
+    - linux
+    - darwin
+  - freeports:
+    - 10025
+    - 18080
+    - 15432
+    - 16379
+  - brew:
+    - python
+    - python3
+    - redis
+    - postgresql
+    - libtool
+    - automake
+    - npm
+  - debs:
+    - python2.7
+    - python3.4
+    - python-virtualenv
+    - python-pip
+    - postgresql-9.3
+    - redis-server
+    - firefox
+    - node-less
+    - automake
+    - libtool
