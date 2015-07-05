@@ -37,16 +37,8 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         )
         virtualenv_python = path.join(venv_dir, "bin", "python")
 
-
-        environment = hitchenvironment.Environment(
-            self.settings["platform"],
-            self.settings["systembits"],
-            self.settings["requires_internet"],
-        )
-
         self.services = ServiceBundle(
             project_directory=PROJECT_DIRECTORY,
-            environment=environment,
             startup_timeout=float(self.settings["startup_timeout"]),
             shutdown_timeout=5.0,
         )
