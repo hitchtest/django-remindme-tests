@@ -12,15 +12,15 @@ It's very easy to set up...
 Set up
 ======
 
-You must have Postgresql, Redis, Python and Virtualenv installed before continuing.
-
 On Ubuntu::
 
     $ sudo apt-get install python python-virtualenv python-pip postgresql redis-server git firefox node-less automake libtool
 
+And, to install the hitch bootstrapper::
+
     $ sudo pip install hitch
 
-On Mac OS X::
+On Mac OS X, ensure that you have firefox installed, and then run::
 
     $ brew install python python3 redis postgresql git libtool automake npm
 
@@ -28,12 +28,11 @@ On Mac OS X::
 
     $ pip install -U setuptools pip virtualenv hitch
 
-
-First clone the django-remindme project::
+First clone the django-remindme project, which contains the application this project will test::
 
   $ git clone https://github.com/hitchtest/django-remindme.git
 
-Then enter the Django-Remindme directory and clone this project inside it::
+Then, enter the Django-Remindme directory and clone this project inside it::
 
   $ git clone https://github.com/hitchtest/django-remindme-tests.git
 
@@ -48,19 +47,17 @@ Then run::
 
   $ hitch test simple_reminder.test
 
-You may need to tweak some of the version settings in settings.yml
-to accomodate the different version of postgresql or redis you are
-running.
 
-This should demonstrate one test *passing* (with python 2.7) and one test
-*failing* (with python 3.4). The fix to make django-remindme work
-in python 3 is very simple.
-
-Caveats
-=======
+Potential issues and caveats
+============================
 
 * The tests will only run on *nix systems. Windows is not supported.
+
+* If you get an error regarding the version of redis or postgresql you have installed, change the version number in settings.yml to match yours.
+
 * Sometimes the latest version of firefox does not work correctly with selenium. If you are experiencing selenium/firefox errors, try downgrading firefox one or two versions.
+
+* Running "hitch test simple_reminder.test" should demonstrate one test *passing* (with python 2.7) and one test *failing* (with python 3.4).
 
 
 .. _Django-RemindMe: https://github.com/hitchtest/django-remindme
