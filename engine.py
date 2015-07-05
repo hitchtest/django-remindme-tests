@@ -27,7 +27,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         if not path.exists(venv_dir):
             system_python = path.join(
                 self.settings['python_folder'][sys.platform],
-                self.preconditions['python_version']
+                "python{}".format(self.preconditions['python_version'])
             )
             call([
                     "virtualenv", "--no-site-packages",
