@@ -66,7 +66,7 @@ Caveats
 =======
 
 * The tests will only run on *nix systems. Windows is not supported.
-* Sometimes the latest version of firefox does not work correctly with selenium. If you are experiencing selenium errors, try downgrading firefox one or two versions.
+* Sometimes the latest version of firefox does not work correctly with selenium. If you are experiencing selenium/firefox errors, try downgrading firefox one or two versions.
 
 
 .. _Django-RemindMe: https://github.com/hitchtest/django-remindme
