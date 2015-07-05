@@ -33,7 +33,7 @@ environment:
     - postgresql
     - libtool
     - automake
-    - npm
+    - node
   - debs:
     - python2.7
     - python3.4
