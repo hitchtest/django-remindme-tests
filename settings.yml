@@ -15,8 +15,8 @@ platform: linux
 requires_internet: False
 startup_timeout: 45
 python_versions:
-  - 2.7
-  - 3.4
+  - 2.7.10
+  - 3.4.3
 environment:
   - approved_platforms:
     - linux

@@ -4,6 +4,7 @@ from subprocess import call, PIPE
 import hitchenvironment
 import hitchpostgres
 import hitchselenium
+import hitchpython
 import hitchdjango
 import hitchcelery
 import hitchredis
@@ -20,26 +21,21 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
     """Engine for orchestating and interacting with the reminders app."""
     def set_up(self):
         """Ensure virtualenv present, then run all services."""
-        chdir(PROJECT_DIRECTORY)
-        venv_dir = path.join(PROJECT_DIRECTORY, "venv{}".format(
-            self.preconditions['python_version'])
-        )
-        if not path.exists(venv_dir):
-            system_python = path.join(
-                self.settings['python_folder'][sys.platform],
-                "python{}".format(self.preconditions['python_version'])
+        python_package = hitchpython.PythonPackage(
+            python_version=self.preconditions['python_version'],
+            directory=path.join(
+                PROJECT_DIRECTORY, "pyv{}".format(
+                    self.preconditions['python_version']
+                )
             )
-            call([
-                    "virtualenv", "--no-site-packages",
-                    "--distribute", "-p", system_python,
-                    venv_dir,
-                ], stdout=sys.stdout, stderr=sys.stderr)
-
-        call(
-            [path.join(venv_dir, "bin", "pip"), "install", "-r", "requirements.txt"],
-            stdout=sys.stdout, stderr=sys.stderr
         )
-        virtualenv_python = path.join(venv_dir, "bin", "python")
+        python_package.build()
+        python_package.verify()
+
+        call([
+            python_package.pip, "install", "-r",
+            path.join(PROJECT_DIRECTORY, "requirements.txt")
+        ])
 
         self.services = ServiceBundle(
             project_directory=PROJECT_DIRECTORY,
@@ -66,15 +62,15 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
             port=16379,
         )
 
-        self.services['Django'] = hitchdjango.DjangoService(
-            python=virtualenv_python,
+        self.services['Django'] = hitchpython.DjangoService(
+            python=python_package.python,
             version=str(self.settings.get("django_version")),
             settings="remindme.settings",
             needs=[self.services['Postgres'], ]
         )
 
-        self.services['Celery'] = hitchcelery.CeleryService(
-            python=virtualenv_python,
+        self.services['Celery'] = hitchpython.CeleryService(
+            python=python_package.python,
             version=self.settings.get("celery_version"),
             app="remindme", loglevel="INFO",
             needs=[
