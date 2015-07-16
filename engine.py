@@ -37,6 +37,17 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
             path.join(PROJECT_DIRECTORY, "requirements.txt")
         ])
 
+        postgres_package = hitchpostgres.PostgresPackage(
+            version=self.settings["postgres_version"],
+            bin_directory=self.settings["postgres_folder"][sys.platform],
+        )
+        postgres_package.verify()
+        redis_package = hitchredis.RedisPackage(
+            version=self.settings.get("redis_version"),
+            bin_directory=self.settings["redis_folder"][sys.platform],
+        )
+        redis_package.verify()
+
         self.services = ServiceBundle(
             project_directory=PROJECT_DIRECTORY,
             startup_timeout=float(self.settings["startup_timeout"]),
@@ -47,10 +58,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         postgres_user = hitchpostgres.PostgresUser("remindme", "password")
 
         self.services['Postgres'] = hitchpostgres.PostgresService(
-            version=self.settings.get("postgres_version"),
-            postgres_installation=hitchpostgres.PostgresInstallation(
-                bin_directory = self.settings["postgres_folder"][sys.platform]
-            ),
+            postgres_package=postgres_package,
             users=[postgres_user, ],
             databases=[hitchpostgres.PostgresDatabase("remindme", postgres_user), ]
         )
@@ -58,7 +66,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         self.services['HitchSMTP'] = hitchsmtp.HitchSMTPService()
 
         self.services['Redis'] = hitchredis.RedisService(
-            version=self.settings.get("redis_version"),
+            redis_package=redis_package,
             port=16379,
         )
 
@@ -151,6 +159,8 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         """Ka-ching!"""
         if not self.settings['quiet'] and call(["which", "kaching"], stdout=PIPE) == 0:
             call(["kaching", "pass"])  # sudo pip install kaching for happy sound
+        if self.settings.get("pause_on_success", False):
+            self.pause(message="SUCCESS")
 
     def tear_down(self):
         """Commit genocide on the services required to run your test."""

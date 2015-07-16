@@ -1,6 +1,9 @@
 postgres_folder:
   darwin: /usr/local/bin/
   linux: /usr/lib/postgresql/9.3/bin/
+redis_folder:
+  darwin: /usr/local/bin/
+  linux: /usr/bin/
 python_folder:
   darwin: /usr/local/bin/
   linux: /usr/bin/
@@ -10,9 +13,6 @@ django_version: 1.8
 celery_version: 3.1.17
 pause_on_success: false
 pause_on_failure: true
-systembits: 64
-platform: linux
-requires_internet: False
 startup_timeout: 45
 python_versions:
   - 2.7.10
@@ -30,7 +30,6 @@ environment:
     - python
     - python3
     - redis
-    - postgresql
     - libtool
     - automake
     - node
@@ -39,7 +38,6 @@ environment:
     - python3.4
     - python-virtualenv
     - python-pip
-    - postgresql-9.3
     - redis-server
     - firefox
     - node-less
