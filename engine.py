@@ -146,9 +146,8 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         """Get in the Delorean, Marty!"""
         self.services.time_travel(days=int(days))
 
-    def on_failure(self, stacktrace):
+    def on_failure(self):
         """Stop and IPython."""
-        self.stacktrace = stacktrace
         if not self.settings['quiet']:
             if call(["which", "kaching"], stdout=PIPE) == 0:
                 call(["kaching", "fail"])  # sudo pip install kaching for sad sound
