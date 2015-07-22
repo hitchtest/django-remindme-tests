@@ -5,13 +5,13 @@ hitchcelery==0.2.1
 hitchcron==0.2
 hitchdjango==0.2
 hitchenvironment==0.2
-hitchpostgres==0.4
+hitchpostgres==0.5
 hitchpython==0.1
 hitchredis==0.3
 hitchselenium==0.3.1
 hitchserve==0.3.8
 hitchsmtp==0.2.1
-hitchtest==0.6.2
+hitchtest==0.6.3
 humanize==0.5.1
 ipython==3.1.0
 Jinja2==2.7.3
