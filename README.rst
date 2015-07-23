@@ -14,7 +14,7 @@ Set up
 
 On Ubuntu::
 
-    $ sudo apt-get install python python-virtualenv python-pip postgresql redis-server git firefox node-less automake libtool
+    $ sudo apt-get install python python-virtualenv python-pip git firefox node-less automake libtool
 
 And, to install the hitch bootstrapper::
 
@@ -22,7 +22,7 @@ And, to install the hitch bootstrapper::
 
 On Mac OS X, ensure that you have firefox installed, and then run::
 
-    $ brew install python python3 redis postgresql git libtool automake npm
+    $ brew install python python3 git libtool automake npm
 
     $ npm install -g less
 
@@ -47,17 +47,19 @@ Then run::
 
   $ hitch test simple_reminder.test
 
+Note that the first run of the test may take up to 20 minutes to run as it must download and build Redis, two pythons and Postgres.
+
+Subsequent test runs will take seconds.
+
+This command will run two tests - one *passing* test (with python 2.7) and one *failing* (with python 3.4).
+
 
 Potential issues and caveats
 ============================
 
 * The tests will only run on *nix systems. Windows is not supported.
 
-* If you get an error regarding the version of redis or postgresql you have installed, change the version number in settings.yml to match yours.
-
 * Sometimes the latest version of firefox does not work correctly with selenium. If you are experiencing selenium/firefox errors, try downgrading firefox one or two versions.
-
-* Running "hitch test simple_reminder.test" should demonstrate one test *passing* (with python 2.7) and one test *failing* (with python 3.4).
 
 
 .. _Django-RemindMe: https://github.com/hitchtest/django-remindme
