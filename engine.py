@@ -39,13 +39,13 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
 
         postgres_package = hitchpostgres.PostgresPackage(
             version=self.settings["postgres_version"],
-            bin_directory=self.settings["postgres_folder"][sys.platform],
         )
+        postgres_package.build()
         postgres_package.verify()
         redis_package = hitchredis.RedisPackage(
-            version=self.settings.get("redis_version"),
-            bin_directory=self.settings["redis_folder"][sys.platform],
+            version=self.settings.get("redis_version")
         )
+        redis_package.build()
         redis_package.verify()
 
         self.services = ServiceBundle(
