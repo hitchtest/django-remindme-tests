@@ -14,7 +14,7 @@ Set up
 
 On Ubuntu::
 
-    $ sudo apt-get install python python-virtualenv python-pip git firefox node-less automake libtool
+    $ sudo apt-get install python python-virtualenv python-pip git firefox node-less automake libtool libreadline6 libreadline6-dev zlib1g-dev libxml2 libxml2-dev
 
 And, to install the hitch bootstrapper::
 
