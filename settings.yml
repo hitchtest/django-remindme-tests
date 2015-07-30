@@ -31,3 +31,27 @@ environment:
     - zlib1g-dev
     - libxml2
     - libxml2-dev
+    - python3
+    - python-setuptools
+    - python3-dev
+    - python-virtualenv
+    - python-pip 
+    - firefox
+    - node-less
+    - automake
+    - libtool
+    - libreadline6
+    - libreadline6-dev
+    - zlib1g-dev
+    - libxml2
+    - libxml2-dev
+    - make
+    - build-essential
+    - libssl-dev
+    - libbz2-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - wget
+    - curl
+    - llvm
+    - libpq-dev

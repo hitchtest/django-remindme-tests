@@ -11,7 +11,7 @@ hitchredis==0.4.1
 hitchselenium==0.3.1
 hitchserve==0.3.9
 hitchsmtp==0.2.1
-hitchtest==0.6.6
+hitchtest==0.6.8
 humanize==0.5.1
 ipython==3.1.0
 Jinja2==2.7.3
