@@ -1,12 +1,3 @@
-postgres_folder:
-  darwin: /usr/local/bin/
-  linux: /usr/lib/postgresql/9.3/bin/
-redis_folder:
-  darwin: /usr/local/bin/
-  linux: /usr/bin/
-python_folder:
-  darwin: /usr/local/bin/
-  linux: /usr/bin/
 postgres_version: 9.3.9
 redis_version: 2.8.4
 django_version: 1.8
