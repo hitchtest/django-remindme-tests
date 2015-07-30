@@ -36,3 +36,8 @@ environment:
     - node-less
     - automake
     - libtool
+    - libreadline6
+    - libreadline6-dev
+    - zlib1g-dev
+    - libxml2
+    - libxml2-dev
