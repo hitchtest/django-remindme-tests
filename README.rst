@@ -37,6 +37,8 @@ And then::
 Set up on Arch
 --------------
 
+Run the following::
+
     $ sudo pacman -S python3 python-setuptools python-pip python-virtualenv m4 base-devel git firefox xorg-xauth xorg-xhost firefox nodejs-less automake readline zlib libxml2 gcc make openssl bzip2 zlib sqlite3 wget curl llvm postgresql-libs
 
     $ sudo pip install hitch
