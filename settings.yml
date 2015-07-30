@@ -31,7 +31,6 @@ environment:
     - automake
     - node
   - debs:
-    - redis-server
     - firefox
     - node-less
     - automake
