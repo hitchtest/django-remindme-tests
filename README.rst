@@ -57,8 +57,8 @@ On Mac OS X, ensure that you have firefox installed, and then run::
     $ pip install -U setuptools pip virtualenv hitch
 
 
-Download and Run
-================
+Download the Project and Run
+============================
 
 First clone the django-remindme project, which contains the application this project will test::
 
