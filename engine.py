@@ -138,7 +138,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         """Wait for, and return email."""
         self.services['HitchSMTP'].logs.out.tail.until_json(
             lambda email: containing in email['payload'] or containing in email['subject'],
-            timeout=15,
+            timeout=25,
             lines_back=1,
         )
 
