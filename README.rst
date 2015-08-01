@@ -9,14 +9,15 @@ repository.
 
 It's very easy to set up...
 
-Set up on Ubuntu
-----------------
+Set up on Ubuntu/Debian
+-----------------------
 
 Run the following::
 
-    $ sudo apt-get install python3 python-setuptools python3-dev python-virtualenv python-pip git firefox node-less automake libtool libreadline6 libreadline6-dev zlib1g-dev libxml2 libxml2-dev make build-essential libssl-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libpq-dev
+    $ sudo apt-get install python3 python-setuptools python3-dev python-virtualenv python-pip git node-less automake libtool libreadline6 libreadline6-dev zlib1g-dev libxml2 libxml2-dev make build-essential libssl-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libpq-dev iceweasel
 
     $ sudo pip install hitch
+
 
 Set up on Red Hat/CentOS/Fedora
 -------------------------------
