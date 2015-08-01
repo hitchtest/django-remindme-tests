@@ -65,14 +65,16 @@ First clone the django-remindme project, which contains the application this pro
 
   $ git clone https://github.com/hitchtest/django-remindme.git
 
-Then, enter the Django-Remindme directory and clone this project inside it::
+  $ cd django-remindme
 
   $ git clone https://github.com/hitchtest/django-remindme-tests.git
+
+  $ cd django-remindme-tests
 
 Run
 ---
 
-Enter the django-remindme/django-remindme-tests/ folder and run::
+Once in the django-remindme/django-remindme-tests/ folder, run::
 
   $ hitch init
 
