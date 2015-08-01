@@ -61,7 +61,7 @@ On Mac OS X, ensure that you have firefox installed, and then run::
 Download the Project and Run
 ============================
 
-First clone the django-remindme project, which contains the application this project will test::
+First clone the django-remindme project, which contains the application this project will test, and then clone this tests repo inside it::
 
   $ git clone https://github.com/hitchtest/django-remindme.git
 
