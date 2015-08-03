@@ -9,9 +9,9 @@ hitchpostgres==0.6.1
 hitchpython==0.2
 hitchredis==0.4.1
 hitchselenium==0.3.1
-hitchserve==0.4.1
+hitchserve==0.4.2
 hitchsmtp==0.2.1
-hitchtest==0.6.9
+hitchtest==0.7
 humanize==0.5.1
 ipython==3.1.0
 Jinja2==2.7.3
@@ -21,6 +21,7 @@ psutil==3.0.0
 python-build==0.2.1
 pyuv==1.0.2
 PyYAML==3.11
+pyzmq==14.7.0
 requests==2.7.0
 selenium==2.46.0
 six==1.9.0
