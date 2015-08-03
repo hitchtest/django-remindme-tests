@@ -87,7 +87,7 @@ class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
         )
 
         self.services['Firefox'] = hitchselenium.SeleniumService(
-            xvfb=self.settings.get("quiet", False)
+            xvfb=self.settings.get("xvfb", False) or self.settings.get("quiet", False)
         )
 
         self.services['Cron'] = hitchcron.CronService(
