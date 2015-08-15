@@ -7,7 +7,7 @@ hitchcron==0.2
 hitchdjango==0.2
 hitchenvironment==0.2
 hitchpostgres==0.6.2
-hitchpython==0.3.1
+hitchpython==0.3.2
 hitchredis==0.4.1
 hitchselenium==0.4
 hitchserve==0.4.3
