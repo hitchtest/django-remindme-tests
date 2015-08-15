@@ -1,7 +1,6 @@
 {% extends "base.yml" %}
 {% block test %}
-- engine: engine.py:DjangoReminderTestExecutionEngine
-  name: Sign up, create reminder and wait for email reminder to arrive in python {{ python_version }}
+- name: Sign up, create reminder and wait for email reminder to arrive in python {{ python_version }}
   preconditions:
     python_version: "{{ python_version }}"
   scenario:

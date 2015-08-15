@@ -17,7 +17,7 @@ import sys
 # Get directory above this file
 PROJECT_DIRECTORY = path.abspath(path.join(path.dirname(__file__), '..'))
 
-class DjangoReminderTestExecutionEngine(hitchtest.ExecutionEngine):
+class ExecutionEngine(hitchtest.ExecutionEngine):
     """Engine for orchestating and interacting with the reminders app."""
     def set_up(self):
         """Ensure virtualenv present, then run all services."""
