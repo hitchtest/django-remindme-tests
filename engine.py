@@ -1,12 +1,9 @@
 from hitchserve import ServiceBundle
 from os import path, system, chdir
 from subprocess import call, PIPE
-import hitchenvironment
 import hitchpostgres
 import hitchselenium
 import hitchpython
-import hitchdjango
-import hitchcelery
 import hitchredis
 import hitchtest
 import hitchsmtp
