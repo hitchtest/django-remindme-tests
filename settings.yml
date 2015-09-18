@@ -16,3 +16,4 @@ environment:
   - packages:
     - firefox
     - node-less
+    - libpq-dev
