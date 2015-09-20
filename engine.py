@@ -117,7 +117,7 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
 
     def click(self, on):
         """Click on HTML id."""
-        self.driver.find_element_by_id(on).click()
+        self.driver.execute_script("document.getElementById('{}').click();".format(on))
 
     def fill_form(self, **kwargs):
         """Fill in a form with id=value."""
@@ -143,6 +143,9 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
     def time_travel(self, days=""):
         """Get in the Delorean, Marty!"""
         self.services.time_travel(days=int(days))
+
+    def connect_to_kernel(self, service_name):
+        self.services.connect_to_ipykernel(service_name)
 
     def on_failure(self):
         """Stop and IPython."""

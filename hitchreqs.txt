@@ -4,7 +4,7 @@ decorator==4.0.2
 docopt==0.6.2
 faketime==0.9.6.3
 hitchcron==0.2
-hitchpostgres==0.6.2
+hitchpostgres==0.6.3
 hitchpython==0.3.5
 hitchredis==0.4.3
 hitchselenium==0.4.1
@@ -12,9 +12,13 @@ hitchserve==0.4.4
 hitchsmtp==0.2.1
 hitchtest==0.8.0
 humanize==0.5.1
+ipykernel==4.0.3
 ipython==4.0.0
 ipython-genutils==0.1.0
 Jinja2==2.8
+jupyter-client==4.0.0
+jupyter-console==4.0.2
+jupyter-core==4.0.6
 MarkupSafe==0.23
 path.py==8.1.1
 patool==1.8
@@ -34,4 +38,4 @@ six==1.9.0
 tblib==1.1.0
 tornado==4.2.1
 traitlets==4.0.0
-unixpackage==0.1.9
+unixpackage==0.2.1
