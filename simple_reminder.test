@@ -3,6 +3,8 @@
 - name: Sign up, create reminder and wait for email reminder to arrive in python {{ python_version }}
   preconditions:
     python_version: "{{ python_version }}"
+  tags:
+    - py{{ python_version }}
   scenario:
     - Load website
     - Click: register
