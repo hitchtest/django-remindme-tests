@@ -13,7 +13,3 @@ environment:
   - approved_platforms:
     - linux
     - darwin
-  - packages:
-    - firefox
-    - node-less
-    - libpq-dev
