@@ -40,6 +40,20 @@ Known Issues
 
 * On some Linux distributions the site appears unstyled. This is due to a bug with libfaketime running with node-less. See: https://github.com/wolfcw/libfaketime/issues/63 (no fix available yet)
 
+* This error occurs on Mac OS X but can be safely ignored::
+
+    Running setup.py bdist_wheel for pyuv
+    Complete output from command /Users/vagrant/django-remindme/django-remindme-tests/.hitch/virtualenv/bin/python3.4 -c "import setuptools;__file__='/private/var/folders/wr/g_dl81tn5_x0t_yz3jw602cr0000gn/T/pip-build-8ifkjs8u/pyuv/setup.py';exec(compile(open(__file__).read().replace('\r\n', '\n'), __file__, 'exec'))" bdist_wheel -d /var/folders/wr/g_dl81tn5_x0t_yz3jw602cr0000gn/T/tmpd7m59gn2pip-wheel-:
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+      File "/private/var/folders/wr/g_dl81tn5_x0t_yz3jw602cr0000gn/T/pip-build-8ifkjs8u/pyuv/setup.py", line 1
+        ﻿# coding=utf-8
+        ^
+    SyntaxError: invalid character in identifier
+
+    ----------------------------------------
+    Failed building wheel for pyuv
+    Failed to build pyuv
 
 .. _Django-RemindMe: https://github.com/hitchtest/django-remindme
 .. _pipsi: https://github.com/mitsuhiko/pipsi
