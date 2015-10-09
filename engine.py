@@ -136,7 +136,7 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
         """Wait for, and return email."""
         self.services['HitchSMTP'].logs.out.tail.until_json(
             lambda email: containing in email['payload'] or containing in email['subject'],
-            timeout=25,
+            timeout=45,
             lines_back=1,
         )
 
