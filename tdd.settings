@@ -1,6 +1,6 @@
 # Test driven development settings - customized for use when building features or fixing bugs.
 #
-# Run with : hitch test [ tests ] --settings tdd.config
+# Run with : hitch test [ tests ] --settings tdd.settings
 #
 # This is a YAML file.
 #
@@ -11,7 +11,7 @@
 # * Override 45 second startup failure for quicker failure detection (increase if testing on a slow machine)
 # * Run kaching - plays a happy sound on test success and a sad sound upon test failure (requires mplayer)
 #
-# Run with : hitch test [ tests ] --settings tdd.config
+# Run with : hitch test [ tests ] --settings tdd.settings
 
 xvfb: false
 failfast: true
