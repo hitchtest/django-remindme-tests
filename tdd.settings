@@ -1,0 +1,21 @@
+# Test driven development settings - customized for use when building features or fixing bugs.
+#
+# Run with : hitch test [ tests ] --settings tdd.config
+#
+# This is a YAML file.
+#
+# If specified, it will:
+# * Shows browser window
+# * Stops immediately on the first test failure
+# * Pause and launch IPython on test failure or test success
+# * Override 45 second startup failure for quicker failure detection (increase if testing on a slow machine)
+# * Run kaching - plays a happy sound on test success and a sad sound upon test failure (requires mplayer)
+#
+# Run with : hitch test [ tests ] --settings tdd.config
+
+xvfb: false
+failfast: true
+pause_on_failure: true
+pause_on_success: true
+startup_timeout: 15
+kaching: true

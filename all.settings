@@ -1,0 +1,34 @@
+# Global settings file for django-remindme
+#
+# This is a YAML file.
+#
+# Settings in this file will always be used unless overridden
+# in a --settings specified YAML file or via --extra.
+#
+# These are the only settings that will be used if you run:
+#   hitch test .
+#
+# These settings will ensure that:
+# * Postgres 9.3.9 is downloaded, compiled and used.
+# * Redis 2.8.4 is downloaded, compiled and used.
+# * The test run will not pause on success or failure.
+# * The test run will end after the *first* failure.
+# * The service startup will time out after 45 seconds.
+# * The tests will be run with *both* python 2.7.10 and python 3.4.3.
+# * The test will fail quickly if run as root (postgres does not like it).
+# * The test will fail quickly if not run on Linux or Mac.
+
+postgres_version: 9.3.9
+redis_version: 2.8.4
+pause_on_success: false
+pause_on_failure: false
+failfast: true
+startup_timeout: 45
+python_versions:
+  - 2.7.10
+  - 3.4.3
+environment:
+  - i_am_root: false
+  - approved_platforms:
+    - linux
+    - darwin

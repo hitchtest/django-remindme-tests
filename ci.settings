@@ -1,0 +1,21 @@
+# Continuous integration settings - customized for use when running the full suite of regression tests.
+#
+# Run with : hitch test [ tests ] --settings ci.settings
+#
+# This is a YAML file.
+#
+# If specified, it will:
+# * Hides the browser window using XVFB (Linux only. Does not work on Mac OS)
+# * Run all tests regardless of failures.
+# * It will not launch IPython and pause on test failure or test success.
+# * Have a longer than default startup timeout since CI might be running on an older machine.
+
+xvfb: true
+failfast: false
+pause_on_failure: false
+pause_on_success: false
+startup_timeout: 65
+
+# set colorless to true if using jenkins; jenkins won't print colored characters correctly
+# in the stacktrace.
+# colorless: true

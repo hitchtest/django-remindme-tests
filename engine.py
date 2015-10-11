@@ -69,14 +69,12 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
 
         self.services['Django'] = hitchpython.DjangoService(
             python=python_package.python,
-            version=str(self.settings.get("django_version")),
             settings="remindme.settings",
             needs=[self.services['Postgres'], ]
         )
 
         self.services['Celery'] = hitchpython.CeleryService(
             python=python_package.python,
-            version=self.settings.get("celery_version"),
             app="remindme", loglevel="INFO",
             needs=[
                 self.services['Redis'], self.services['Postgres'],
