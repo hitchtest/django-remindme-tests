@@ -17,5 +17,5 @@ xvfb: false
 failfast: true
 pause_on_failure: true
 pause_on_success: true
-startup_timeout: 15
+startup_timeout: 25
 kaching: true
