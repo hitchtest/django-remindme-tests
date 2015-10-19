@@ -1,6 +1,6 @@
 from hitchserve import ServiceBundle
 from os import path, system, chdir
-from subprocess import call, PIPE
+from subprocess import call, check_call, PIPE
 import hitchpostgres
 import hitchselenium
 import hitchpython
@@ -19,17 +19,12 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
     def set_up(self):
         """Ensure virtualenv present, then run all services."""
         python_package = hitchpython.PythonPackage(
-            python_version=self.preconditions['python_version'],
-            directory=path.join(
-                PROJECT_DIRECTORY, "pyv{}".format(
-                    self.preconditions['python_version']
-                )
-            )
+            python_version=self.preconditions['python_version']
         )
         python_package.build()
         python_package.verify()
 
-        call([
+        check_call([
             python_package.pip, "install", "-r",
             path.join(PROJECT_DIRECTORY, "requirements.txt")
         ])
