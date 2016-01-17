@@ -49,7 +49,7 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
         if not path.exists(path.join(
             hitchtest.utils.get_hitch_directory(),
             "node_modules", "less", "bin", "lessc"
-        ):
+        )):
             chdir(hitchtest.utils.get_hitch_directory())
             check_call([node_package.npm, "install", "less"])
             chdir(PROJECT_DIRECTORY)
