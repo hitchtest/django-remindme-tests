@@ -8,16 +8,25 @@ import hitchredis
 import hitchtest
 import hitchsmtp
 import hitchcron
+import hitchnode
 import IPython
 import sys
 
 # Get directory above this file
 PROJECT_DIRECTORY = path.abspath(path.join(path.dirname(__file__), '..'))
 
+TEST_SETTINGS = """
+LESS_BINARY = "{less_binary}"
+
+from remindme.settings import *
+"""
+
 class ExecutionEngine(hitchtest.ExecutionEngine):
     """Engine for orchestating and interacting with the reminders app."""
     def set_up(self):
         """Ensure virtualenv present, then run all services."""
+        chdir(PROJECT_DIRECTORY)
+        
         python_package = hitchpython.PythonPackage(
             python_version=self.preconditions['python_version']
         )
@@ -36,6 +45,22 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
             version=self.settings.get("redis_version")
         )
         redis_package.build()
+
+        node_package = hitchnode.NodePackage()
+        node_package.build()
+
+        lessc = path.join(
+            hitchtest.utils.get_hitch_directory(),
+            "node_modules", "less", "bin", "lessc"
+        )
+
+        if not path.exists(lessc):
+            chdir(hitchtest.utils.get_hitch_directory())
+            check_call([node_package.npm, "install", "less"])
+            chdir(PROJECT_DIRECTORY)
+
+        with open(path.join(PROJECT_DIRECTORY, "remindme", "test_settings.py"), "w") as handle:
+            handle.write(TEST_SETTINGS.format(less_binary=lessc))
 
         self.services = ServiceBundle(
             project_directory=PROJECT_DIRECTORY,
@@ -61,7 +86,7 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
 
         self.services['Django'] = hitchpython.DjangoService(
             python=python_package.python,
-            settings="remindme.settings",
+            settings="remindme.test_settings",
             needs=[self.services['Postgres'], ]
         )
 
