@@ -22,7 +22,6 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
             python_version=self.preconditions['python_version']
         )
         python_package.build()
-        python_package.verify()
 
         check_call([
             python_package.pip, "install", "-r",
@@ -33,12 +32,10 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
             version=self.settings["postgres_version"],
         )
         postgres_package.build()
-        postgres_package.verify()
         redis_package = hitchredis.RedisPackage(
             version=self.settings.get("redis_version")
         )
         redis_package.build()
-        redis_package.verify()
 
         self.services = ServiceBundle(
             project_directory=PROJECT_DIRECTORY,
@@ -91,8 +88,8 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
 
         # Configure selenium driver
         self.driver = self.services['Firefox'].driver
-        self.driver.set_window_size(450, 350)
-        self.driver.set_window_position(0, 0)
+        #self.driver.set_window_size(450, 350)
+        #self.driver.set_window_position(0, 0)
         self.driver.implicitly_wait(2.0)
         self.driver.accept_next_alert = True
 
