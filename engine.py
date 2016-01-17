@@ -139,15 +139,14 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
 
     def on_failure(self):
         """Stop and IPython."""
-        if not self.settings['quiet']:
-            if call(["which", "kaching"], stdout=PIPE) == 0:
-                call(["kaching", "fail"])  # sudo pip install kaching for sad sound
-            if self.settings.get("pause_on_failure", False):
-                self.pause(message=self.stacktrace.to_template())
+        if call(["which", "kaching"], stdout=PIPE) == 0:
+            call(["kaching", "fail"])  # sudo pip install kaching for sad sound
+        if self.settings.get("pause_on_failure", False):
+            self.pause(message=self.stacktrace.to_template())
 
     def on_success(self):
         """Ka-ching!"""
-        if not self.settings['quiet'] and call(["which", "kaching"], stdout=PIPE) == 0:
+        if call(["which", "kaching"], stdout=PIPE) == 0:
             call(["kaching", "pass"])  # sudo pip install kaching for happy sound
         if self.settings.get("pause_on_success", False):
             self.pause(message="SUCCESS")
